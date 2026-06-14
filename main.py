@@ -608,6 +608,7 @@ class WebReaderPlugin(Star):
             path_key = "_".join(path_parts[:2]) if path_parts else ""
             name_part = f"{domain}_{path_key}" if path_key else domain
             name_part = re.sub(r"[^\w]", "_", name_part)[:30]
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
         ext_map = {
             "summary": ".md",
