@@ -585,7 +585,7 @@ class WebReaderPlugin(Star):
     # ============================================================
     # 功能：保存文件
     # ============================================================
-    def _save_file(self, content: str, format_type: str, url: str, title: str = "") -> Path:
+    def _save_file(self, content: str, format_type: str, url: str) -> Path:
         """
         保存内容到文件
         
@@ -593,21 +593,8 @@ class WebReaderPlugin(Star):
             文件路径
         """
         # 生成文件名（基于URL和时间）
-        
-        # 从标题提取文件名关键词
-        name_part = "webpage"
-        if title:
-            # 取标题前20个字，去掉特殊字符
-            name_part = re.sub(r'[^\w\u4e00-\u9fff]', "", title)[:20]
-        elif url:
-            # 从URL提取域名+路径关键词
-            from urllib.parse import urlparse
-            parsed = urlparse(url)
-            domain = parsed.netloc.replace("www.", "")
-            path_parts = [p for p in parsed.path.split("/") if p and not p.startswith("{")]
-            path_key = "_".join(path_parts[:2]) if path_parts else ""
-            name_part = f"{domain}_{path_key}" if path_key else domain
-            name_part = re.sub(r"[^\w]", "_", name_part)[:30]
+        url_short = re.sub(r"[^\w]", "_", url.split("//")[-1][:30]) if url else "webpage"
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
         ext_map = {
             "summary": ".md",
@@ -703,12 +690,7 @@ class WebReaderPlugin(Star):
             )
             result_text = header + result_text
 
-        # 从内容中提取标题
-        file_title = ""
-        if result_text.startswith("标题: "):
-            file_title = result_text.split("\n")[0].replace("标题: ", "").strip()
-        
-        filepath = self._save_file(result_text, format_type, url, title=file_title)
+        filepath = self._save_file(result_text, format_type, url)
 
         return result_text, filepath, len(raw_text)
 
