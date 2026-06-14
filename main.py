@@ -625,7 +625,7 @@ class WebReaderPlugin(Star):
         else:
             ext = ext_map.get(format_type, ".md")
 
-        filename = f"{name_part}_{timestamp}{ext}"
+        filename = f"{url_short}_{timestamp}{ext}"
         filepath = self.output_dir / filename
 
         with open(filepath, "w", encoding="utf-8") as f:
