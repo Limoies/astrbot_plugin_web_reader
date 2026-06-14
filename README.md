@@ -45,6 +45,7 @@
 | `summary` 📝 | 详细摘要（Markdown） | 学习笔记、文章速读 |
 | `bullets` 📋 | 要点列表 | 复习提纲、会议纪要 |
 | `table` 📊 | 结构化表格 | 对比分析、数据整理 |
+| `organize` 📐 | **整理原文结构**（不改内容，只加分段标题） | 保留原文、增强可读性 |
 | `json` 📦 | JSON 格式 | 程序处理、二次开发 |
 | `csv` 📗 | CSV 格式 | Excel 打开、数据统计 |
 
@@ -75,11 +76,13 @@ pip install -r requirements.txt
 ### 📋 依赖说明
 | 依赖 | 用途 | 备注 |
 |:----|:----|:-----|
-| `playwright` | 浏览器自动化（动态页面） | ✅ 默认使用**系统Chrome**，无需额外下载 |
+| `playwright` | 浏览器自动化（动态页面） | ✅ 默认使用**系统Chrome**，多数用户无需额外操作 |
 | `beautifulsoup4` | HTML 解析 | 静态页面备用方案 |
 | `pypdf` | PDF 文字提取 | 可选 |
 | `python-docx` | Word 文字提取 | 可选 |
 | `requests` | HTTP 请求 | 基础依赖 |
+
+> 💡 **关于浏览器：** 插件默认调用你电脑上已安装的 Chrome。如果没有 Chrome，可在配置中将 `browser_channel` 留空，然后运行 `playwright install chromium` 安装自带内核。
 
 ---
 

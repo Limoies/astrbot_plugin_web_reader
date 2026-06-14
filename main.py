@@ -475,6 +475,14 @@ class WebReaderPlugin(Star):
                 "2. 只输出JSON，不要其他文字\n"
                 "3. 确保JSON格式正确，可被json.loads解析"
             ),
+            "organize": (
+                "请对以下网页内容进行结构整理，要求：\n"
+                "1. **保留全部原文内容，不要删减或改写**\n"
+                "2. 根据内容逻辑划分段落，添加合适的小标题\n"
+                "3. 用 Markdown 标题层级（# ## ###）组织结构\n"
+                "4. 识别列表、引用、代码块等特殊格式并标注\n"
+                "5. 目标是让原文更清晰易读，而不是总结或提炼"
+            ),
             "csv": (
                 "请将以下内容整理为CSV格式，要求：\n"
                 "1. 第一行为列名\n"
@@ -592,6 +600,7 @@ class WebReaderPlugin(Star):
             "summary": ".md",
             "bullets": ".md",
             "table": ".md",
+            "organize": ".md",
             "json": ".json",
             "csv": ".csv",
         }
@@ -716,7 +725,7 @@ class WebReaderPlugin(Star):
 
         # 解析 --format 参数
         format_match = re.search(r'--format\s+(\S+)', text)
-        valid_formats = ["summary", "bullets", "table", "json", "csv"]
+        valid_formats = ["summary", "bullets", "table", "organize", "json", "csv"]
         if format_match:
             fmt = format_match.group(1).lower()
             if fmt in valid_formats:

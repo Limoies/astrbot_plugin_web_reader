@@ -37,6 +37,7 @@
             "summary",
             "bullets",
             "table",
+            "organize",
             "json",
             "csv"
         ]
