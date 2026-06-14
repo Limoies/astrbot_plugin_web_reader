@@ -1,0 +1,18 @@
+name: astrbot_plugin_web_reader
+display_name: 网页读取器
+desc: 读取网页/PDF/Word的文字内容，调用LLM分析后保存为结构化文件（Markdown/JSON/CSV）
+help: |
+  命令:
+    /readweb <url>                    读取指定网页并分析
+    /readweb                          连接当前Chrome浏览器，读取当前标签页
+  参数:
+    --format <format>                 输出格式: summary(摘要) / bullets(要点) / table(表格) / json / csv
+    --no-llm                          跳过LLM分析，只提取原始文字并保存
+  示例:
+    /readweb https://example.com
+    /readweb https://example.com --format bullets
+    /readweb https://example.com --no-llm
+    /readweb --format table
+version: v1.0.0
+author: 苏泽 & 小莉墨
+repo: "https://github.com/苏泽/astrbot_plugin_web_reader"

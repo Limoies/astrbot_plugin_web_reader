@@ -1,0 +1,98 @@
+{
+    "llm_api_key": {
+        "description": "大模型API密钥（必填，使用AI分析时需要）",
+        "type": "string",
+        "hint": "输入你的API Key，如 sk-xxxxxxxx",
+        "default": ""
+    },
+    "llm_api_base": {
+        "description": "大模型API地址",
+        "type": "string",
+        "hint": "支持任意 OpenAI 兼容接口",
+        "default": "https://api.deepseek.com"
+    },
+    "llm_model_name": {
+        "description": "大模型名称",
+        "type": "string",
+        "hint": "根据你的 API 提供商填写",
+        "default": "deepseek-chat"
+    },
+    "llm_max_tokens": {
+        "description": "LLM最大输出Token数",
+        "type": "int",
+        "hint": "分析较长内容时建议设置大一点",
+        "default": 4096,
+        "slider": {
+            "min": 512,
+            "max": 16384,
+            "step": 512
+        }
+    },
+    "default_format": {
+        "description": "默认输出格式（未指定 --format 时使用）",
+        "type": "string",
+        "hint": "选择你喜欢默认输出格式",
+        "default": "summary",
+        "options": [
+            "summary",
+            "bullets",
+            "table",
+            "json",
+            "csv"
+        ]
+    },
+    "output_extension": {
+        "description": "保存文件的扩展名",
+        "type": "string",
+        "hint": "选择文件后缀，留空则根据输出格式自动选择",
+        "default": "",
+        "options": [
+            "",
+            "md",
+            "txt",
+            "html",
+            "json",
+            "csv"
+        ]
+    },
+    "output_dir": {
+        "description": "输出文件保存目录",
+        "type": "string",
+        "hint": "留空使用默认路径，也可输入完整路径如 D:\\MyNotes",
+        "default": ""
+    },
+    "browser_channel": {
+        "description": "浏览器通道",
+        "type": "string",
+        "hint": "选择要使用的浏览器",
+        "default": "chrome",
+        "options": [
+            "chrome",
+            "msedge",
+            ""
+        ]
+    },
+    "auto_scroll": {
+        "description": "自动滚动加载动态页面",
+        "type": "bool",
+        "hint": "启用后会自动滚动到页面底部，加载懒加载内容",
+        "default": true
+    },
+    "scroll_max_rounds": {
+        "description": "最大自动滚动轮数",
+        "type": "int",
+        "hint": "防止无限滚动页面卡死",
+        "default": 30,
+        "slider": {
+            "min": 5,
+            "max": 100,
+            "step": 5
+        }
+    },
+    "chrome_debug_port": {
+        "description": "Chrome远程调试端口",
+        "type": "int",
+        "hint": "用于连接已打开的Chrome浏览器",
+        "default": 9222
+    }
+}
