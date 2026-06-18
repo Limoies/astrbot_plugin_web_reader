@@ -585,15 +585,25 @@ class WebReaderPlugin(Star):
     # ============================================================
     # 功能：保存文件
     # ============================================================
-    def _save_file(self, content: str, format_type: str, url: str) -> Path:
+    def _save_file(self, content: str, format_type: str, url: str, title: str = "") -> Path:
         """
         保存内容到文件
         
         Returns:
             文件路径
         """
-        # 生成文件名（基于URL和时间）
-        url_short = re.sub(r"[^\w]", "_", url.split("//")[-1][:30]) if url else "webpage"
+        # 生成文件名：优先用标题，其次用URL
+        name_part = "webpage"
+        if title:
+            name_part = re.sub(r'[^\w\u4e00-\u9fff]', '', title)[:20]
+        elif url:
+            from urllib.parse import urlparse
+            parsed = urlparse(url)
+            domain = parsed.netloc.replace("www.", "")
+            path_parts = [p for p in parsed.path.split("/") if p and not p.startswith("{")]
+            path_key = "_".join(path_parts[:2]) if path_parts else ""
+            name_part = f"{domain}_{path_key}" if path_key else domain
+            name_part = re.sub(r"[^\w]", "_", name_part)[:30]
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
         ext_map = {
@@ -612,7 +622,7 @@ class WebReaderPlugin(Star):
         else:
             ext = ext_map.get(format_type, ".md")
 
-        filename = f"{url_short}_{timestamp}{ext}"
+        filename = f"{name_part}_{timestamp}{ext}"
         filepath = self.output_dir / filename
 
         with open(filepath, "w", encoding="utf-8") as f:
@@ -690,7 +700,12 @@ class WebReaderPlugin(Star):
             )
             result_text = header + result_text
 
-        filepath = self._save_file(result_text, format_type, url)
+        # 从结果文本中提取标题
+        file_title = ""
+        if result_text.startswith("标题: "):
+            file_title = result_text.split("\n")[0].replace("标题: ", "").strip()
+        
+        filepath = self._save_file(result_text, format_type, url, title=file_title)
 
         return result_text, filepath, len(raw_text)
 
