@@ -477,11 +477,12 @@ class WebReaderPlugin(Star):
             ),
             "organize": (
                 "请对以下网页内容进行结构整理，要求：\n"
-                "1. **保留全部原文内容，不要删减或改写**\n"
+                "1. **必须保留全部原文内容，逐字逐句保留，不得删减、改写、概括或提炼**\n"
                 "2. 根据内容逻辑划分段落，添加合适的小标题\n"
                 "3. 用 Markdown 标题层级（# ## ###）组织结构\n"
                 "4. 识别列表、引用、代码块等特殊格式并标注\n"
-                "5. 目标是让原文更清晰易读，而不是总结或提炼"
+                "5. 目标是让原文更清晰易读，而不是总结或提炼\n"
+                "6. 整理后的内容应当和原文长度相近，不应变短"
             ),
             "csv": (
                 "请将以下内容整理为CSV格式，要求：\n"
@@ -700,10 +701,10 @@ class WebReaderPlugin(Star):
             )
             result_text = header + result_text
 
-        # 从结果文本中提取标题
+        # 从原始内容中提取标题（raw_text 包含Playwright返回的"标题: xxx"）
         file_title = ""
-        if result_text.startswith("标题: "):
-            file_title = result_text.split("\n")[0].replace("标题: ", "").strip()
+        if raw_text.startswith("标题: "):
+            file_title = raw_text.split("\n")[0].replace("标题: ", "").strip()
         
         filepath = self._save_file(result_text, format_type, url, title=file_title)
 
